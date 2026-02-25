@@ -1,37 +1,44 @@
+const CustomErrorhandler = require("../error/custom-error.handler");
 const AuthorSchema = require("../schema/author.schema")
 
-const getAllAuthors = async (req, res) => {
+const getAllAuthors = async (req, res, next) => {
     try {
         const authors = await AuthorSchema.find()
+
         res.status(200).json(authors);
     }catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error)
     }
 }
 
-const getOneAuthor = async (req, res) => {
+const search = async (req, res, next) => {
+    try {
+        const {searchingValue} = req.query
+        const result = await AuthorSchema.find({
+            fullName: {$regex: searchingValue, $options: "i" }
+        })
+    }catch (error) {
+        next(error)
+    }
+}
+
+const getOneAuthor = async (req, res, next) => {
     try {
         const { id } = req.params
 
         const foundedAuthor = await AuthorSchema.findById(id)
 
         if (!foundedAuthor) {
-            return res.status(404).json({
-                message: "Author not found"
-            })
+            throw CustomErrorhandler.NotFound("Author not found")
         }
 
         res.status(200).json(foundedAuthor)
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error)
     }
 }
 
-const addAuthor = async (req, res) => {
+const addAuthor = async (req, res, next) => {
     try {
         const { fullName, birthDate, deathDate, period, bio, work, imageUrl } = req.body
 
@@ -48,13 +55,11 @@ const addAuthor = async (req, res) => {
         res.status(201).json(newAuthor);
 
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error)
     }
 }
 
-const updateAuthor = async (req, res) => {
+const updateAuthor = async (req, res, next) => {
     try {
         const { id } = req.params
         const { fullName, birthDate, deathDate, period, bio, work, imageUrl } = req.body;
@@ -62,9 +67,7 @@ const updateAuthor = async (req, res) => {
         const foundedAuthor = await AuthorSchema.findById(id)
 
         if (!foundedAuthor) {
-            return res.status(404).json({
-                message: "Author not found"
-            })
+            throw CustomErrorhandler.NotFound("Author not found")
         }
 
         foundedAuthor.fullName = fullName || foundedAuthor.fullName;
@@ -79,33 +82,28 @@ const updateAuthor = async (req, res) => {
 
         res.status(200).json(foundedAuthor);
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error)
     }
 }
 
-const deleteAuthor = async (req, res) => {
+const deleteAuthor = async (req, res, next) => {
     try {
         const { id } = req.params
         const deletedAuthor = await AuthorSchema.findByIdAndDelete(id);
 
         if (!deletedAuthor) {
-            return res.status(404).json({
-                message: "Author not found"
-            })
+            throw CustomErrorhandler.NotFound("Author not found")
         }
 
         res.status(200).json(deletedAuthor);
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error)
     }
 }
 
 module.exports = {
     getAllAuthors,
+    search,
     getOneAuthor,
     addAuthor,
     updateAuthor,
