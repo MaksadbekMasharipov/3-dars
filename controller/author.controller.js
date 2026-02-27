@@ -13,14 +13,24 @@ const getAllAuthors = async (req, res, next) => {
 
 const search = async (req, res, next) => {
     try {
-        const {searchingValue} = req.query
+        const { searchingValue } = req.query;
+
+        if (!searchingValue) {
+            return res.status(400).json({
+                message: "Qidiruv qiymati kiritilmadi"
+            });
+        }
+
         const result = await AuthorSchema.find({
-            fullName: {$regex: searchingValue, $options: "i" }
-        })
-    }catch (error) {
-        next(error)
+            fullName: { $regex: searchingValue, $options: "i" }
+        });
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        next(error);
     }
-}
+};
 
 const getOneAuthor = async (req, res, next) => {
     try {

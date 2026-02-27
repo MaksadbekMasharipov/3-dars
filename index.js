@@ -4,7 +4,9 @@ const connectDb = require('./config/db.config');
 const authorRouter = require('./router/author.routes');
 const bookRouter = require('./router/book.routes');
 const errorMiddleware = require('./middleware/error.middleware');
+const authRouter = require('./router/auth.routes');
 require("dotenv").config()
+const cookieParser = require("cookie-parser")
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -12,10 +14,12 @@ const PORT = process.env.PORT || 3000
 connectDb()
 app.use(express.json())
 app.use(cors())
+app.use(cookieParser())
 
 // router
 app.use(authorRouter)
 app.use(bookRouter)
+app.use(authRouter)
 
 app.use(errorMiddleware)
 
