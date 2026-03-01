@@ -8,7 +8,7 @@ const Iqtibos = new Schema({
         maxLength: [500, "ko'pi bilan 500 harfdan iborat bo'lishi kerak"],
         trim: true
     },
-    book: {
+    added_by: {
         type: String,
         required: true,
     }

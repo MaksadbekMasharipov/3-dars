@@ -5,7 +5,7 @@ const { getOneIqtibos, getAllIqtibos, updateIqtibos, addIqtibos, deleteIqtibos }
 const iqtibosRouter = Router()
 
 iqtibosRouter.get("/get_all_iqtibos", getAllIqtibos )
-iqtibosRouter.get("/get_one_iqtibos", getOneIqtibos )
+iqtibosRouter.get("/get_one_iqtibos/:id", getOneIqtibos )
 iqtibosRouter.post("/add_iqtibos", addIqtibos )
 iqtibosRouter.put("/update_iqtibos/:id", updateIqtibos)
 iqtibosRouter.delete("/delete_iqtibos/:id", deleteIqtibos)

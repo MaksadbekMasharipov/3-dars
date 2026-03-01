@@ -1,18 +1,16 @@
 const CustomErrorhandler = require("../error/custom-error.handler");
 const IqtibosSchema = require("../schema/iqtibos.schema");
 
-const getAllIqtibos = async (req, res) => {
+const getAllIqtibos = async (req, res, next) => {
     try {
         const iqtibos = await IqtibosSchema.find()
         res.status(200).json(iqtibos);
-    }catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+    } catch (error) {
+        next(error)
     }
 }
 
-const getOneIqtibos = async (req, res) => {
+const getOneIqtibos = async (req, res, next) => {
     try {
         const { id } = req.params
 
@@ -24,34 +22,30 @@ const getOneIqtibos = async (req, res) => {
 
         res.status(200).json(foundedIqtibos)
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error)
     }
 }
 
-const addIqtibos = async (req, res) => {
+const addIqtibos = async (req, res, next) => {
     try {
-        const { text, book } = req.body
+        const { text, added_by } = req.body
 
         const newIqtibos = await IqtibosSchema.create({
             text,
-            book
+            added_by
         })
 
         res.status(201).json(newIqtibos);
 
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error)
     }
 }
 
-const updateIqtibos = async (req, res) => {
+const updateIqtibos = async (req, res, next) => {
     try {
         const { id } = req.params
-        const { text, book } = req.body;
+        const { text, added_by } = req.body;
 
         const foundedIqtibos = await IqtibosSchema.findById(id)
 
@@ -59,18 +53,16 @@ const updateIqtibos = async (req, res) => {
             throw CustomErrorhandler.NotFound("Iqtibos not found") 
         }
 
-        await IqtibosSchema.findByIdAndUpdate(id, {text, book})
+        const updatedIqtibos = await IqtibosSchema.findByIdAndUpdate(id, {text, added_by}, {new: true})
 
 
-        res.status(200).json(foundedIqtibos);
+        res.status(200).json(updatedIqtibos);
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error)
     }
 }
 
-const deleteIqtibos = async (req, res) => {
+const deleteIqtibos = async (req, res, next) => {
     try {
         const { id } = req.params
         const deletedIqtibos = await IqtibosSchema.findByIdAndDelete(id);
@@ -81,9 +73,7 @@ const deleteIqtibos = async (req, res) => {
 
         res.status(200).json(deletedIqtibos);
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        next(error)
     }
 }
 

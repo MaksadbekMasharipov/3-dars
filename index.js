@@ -3,6 +3,7 @@ const cors = require("cors");
 const connectDb = require('./config/db.config');
 const authorRouter = require('./router/author.routes');
 const bookRouter = require('./router/book.routes');
+const iqtibosRouter = require('./router/iqtibos.routes');
 const errorMiddleware = require('./middleware/error.middleware');
 const authRouter = require('./router/auth.routes');
 require("dotenv").config()
@@ -19,6 +20,7 @@ app.use(cookieParser())
 // router
 app.use(authorRouter)
 app.use(bookRouter)
+app.use(iqtibosRouter)
 app.use(authRouter)
 
 app.use(errorMiddleware)
