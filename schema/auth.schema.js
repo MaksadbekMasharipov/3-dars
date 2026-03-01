@@ -28,6 +28,9 @@ const Auth = new Schema({
     otpTime: {
         type: Number,
         required: true,
+    },
+    refreshToken: {
+        type: String,
     }
 }, {
     versionKey: false,

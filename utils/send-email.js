@@ -38,21 +38,20 @@ async function sendMessaege(code, email, username, bookName = "") {
           <td style="padding:30px;">
             <h2 style="margin-top:0; color:#111827;">Salom, ${username} 👋</h2>
             <p style="color:#4b5563; line-height:1.6;">
-              <strong>${bookName}</strong> nomli kitob tizimga muvaffaqiyatli qo‘shildi.
-            </p>
-
-            <p style="color:#4b5563; line-height:1.6;">
-              Endi siz kitobni boshqarishingiz yoki yangilashingiz mumkin.
+              Tizimga ro'yxatdan o'tish uchun quyidagi tasdiqlash kodini kiriting:
             </p>
 
             <div style="text-align:center; margin:30px 0;">
-              <a href="https://yourbooksite.com/dashboard"
-                 style="display:inline-block; padding:12px 24px; background:#4f46e5; color:#ffffff; text-decoration:none; border-radius:8px; font-weight:bold;">
-                 Dashboardga o'tish
-              </a>
+              <div style="display:inline-block; padding:20px 40px; background:linear-gradient(135deg,#4f46e5,#7c3aed); color:#ffffff; border-radius:12px; font-size:32px; font-weight:bold; letter-spacing:8px;">
+                ${code}
+              </div>
             </div>
 
-            <p style="font-size:13px; color:#9ca3af;">
+            <p style="color:#4b5563; line-height:1.6; text-align:center;">
+              Kod 2 daqiqa davomida amal qiladi.
+            </p>
+
+            <p style="font-size:13px; color:#9ca3af; margin-top:30px;">
               Agar bu amalni siz bajarmagan bo‘lsangiz, iltimos support bilan bog‘laning.
             </p>
           </td>

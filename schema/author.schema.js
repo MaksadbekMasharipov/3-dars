@@ -15,10 +15,9 @@ const Author = new Schema({
         max: [Date.now, "Kelajak sana kiritib bo'lmaydi"],
     },
     deathDate: {
-        type: String,
+        type: Date,
         required: true,
         max: [Date.now, "Kelajak sana kiritib bo'lmaydi"],
-        trim: true,
     },
     period: {
         type: String,

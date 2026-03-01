@@ -1,10 +1,13 @@
 const { Router } = require("express")
-const { register, varify } = require("../controller/auth.controller")
+const { register, varify, login, logout } = require("../controller/auth.controller")
+const authorization = require("../middleware/authorization")
 
 const authRouter = Router()
 
 authRouter.post("/register", register )
 authRouter.post("/verify", varify )
+authRouter.post("/login", login )
+authRouter.get("/logout", authorization, logout )
 
 
 module.exports = authRouter 

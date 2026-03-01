@@ -32,7 +32,7 @@ const getOneBook = async (req, res) => {
 
 const addBook = async (req, res) => {
     try {
-        const { title, publishedYear, publishedHome, description, period, genre, pages, imageUrl, authorInfo } = req.body
+        const { title, publishedYear, publishedHome, description, period, genre, pages, imageUrl, authorInfo, iqtibosInfo } = req.body
 
         const newBook = await BookSchema.create({
             title, 
@@ -43,7 +43,8 @@ const addBook = async (req, res) => {
             genre, 
             pages, 
             imageUrl,
-            authorInfo 
+            authorInfo,
+            iqtibosInfo
         })
 
         res.status(201).json(newBook);

@@ -55,6 +55,10 @@ const Book = new Schema({
     authorInfo: {
         type: Schema.Types.ObjectId,
         ref: "author"
+    },
+    iqtibosInfo: {
+        type: Schema.Types.ObjectId,
+        ref: "iqtibos"
     }
 }, {
     versionKey: false,
