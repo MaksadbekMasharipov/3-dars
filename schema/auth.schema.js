@@ -21,6 +21,18 @@ const Auth = new Schema({
         type: String,
         default: "user"
     },
+    firstName: {
+        type: String,
+        required: false
+    },
+    lastName: {
+        type: String,
+        required: false
+    },
+    phoneNumber: {
+        type: Number,
+        required: false
+    },
     otp: {
         type: String,
         required: true,
@@ -31,8 +43,8 @@ const Auth = new Schema({
     },
     refreshToken: {
         type: String,
-    }
-}, {
+    },
+
     versionKey: false,
     timestamps: true
 })

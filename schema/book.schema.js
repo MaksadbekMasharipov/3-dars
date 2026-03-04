@@ -1,3 +1,4 @@
+const { required } = require("joi");
 const { Schema, model } = require("mongoose");
 
 const Book = new Schema({
@@ -59,6 +60,10 @@ const Book = new Schema({
     iqtibosInfo: {
         type: Schema.Types.ObjectId,
         ref: "iqtibos"
+    },
+    audio: {
+        type: String,
+        required: false 
     }
 }, {
     versionKey: false,

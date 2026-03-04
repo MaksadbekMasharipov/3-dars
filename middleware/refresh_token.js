@@ -10,7 +10,6 @@ module.exports = function (req, res, next) {
             throw CustomErrorhandler.UnAuthorized("refresh token not found")
         }
 
-
         if (bearer !== "Bearer" || !token) {
             throw CustomErrorhandler.UnAuthorized("Token is required")
         }

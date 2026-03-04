@@ -125,8 +125,6 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
     try {
-
-
         // foydalanuvchi bor yoki yo'qligini tekshirish
         const foundedUser = await AuthSchema.findOne({ email: req["user"].email })
         if (!foundedUser) {
@@ -148,9 +146,80 @@ const logout = async (req, res, next) => {
 }
 
 
+const addProfileInfo = async (req, res) => {
+    try {
+        const { firstName, lastName, phoneNumber } = req.body
+        const userId = req["user"].id
+
+        const foundedUser = await AuthSchema.findById(userId)
+
+        if (!foundedUser) {
+            throw CustomErrorhandler.NotFound("User not found")
+        }
+
+        await AuthSchema.findByIdAndUpdate(userId, {
+            firstName,
+            lastName,
+            phoneNumber
+        })
+
+        res.status(200).json({
+            message: "Profile info added successfully",
+            user: foundedUser
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+const updateProfileInfo = async (req, res) => {
+    try {
+        const { id } = req.params
+        const { firstName, lastName, phoneNumber } = req.body;
+
+        const foundedProfile = await AuthSchema.findById(id)
+
+        if (!foundedProfile) {
+            throw CustomErrorhandler.NotFound("Profile not found")
+        }
+
+        await AuthSchema.findByIdAndUpdate(id, { firstName, lastName, phoneNumber })
+
+        res.status(200).json(foundedProfile);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+const deleteProfileInfo = async (req, res) => {
+    try {
+        const { id } = req.params
+        const deletedInfo = await AuthSchema.findByIdAndDelete(id);
+
+        if (!deletedInfo) {
+            throw CustomErrorhandler.NotFound("Profile not found") 
+        }
+
+        res.status(200).json(deletedInfo);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+
 module.exports = {
     register,
     varify,
     login,
-    logout
+    logout,
+    addProfileInfo,
+    updateProfileInfo,
+    deleteProfileInfo
 }

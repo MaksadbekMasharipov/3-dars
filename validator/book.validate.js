@@ -11,7 +11,8 @@ const bookValidator = (data) => {
         genre: joi.string().valid("Horror", "Fantasy", "Sience-fiction", "Historical", "Comedy", "Romance", "Thriller").required(),
         imageUrl: joi.string().uri().required(),
         authorInfo: joi.string().hex().length(24).required(),
-        iqtibosInfo: joi.string().hex().length(24).optional()
+        iqtibosInfo: joi.string().hex().length(24).optional(),
+        audio: joi.string().optional()
     })
 
     return schema.validate(data)
